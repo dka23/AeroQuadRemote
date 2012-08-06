@@ -67,4 +67,52 @@
         android:layout_marginRight="15dp"
         android:layout_toLeftOf="@+id/textView1" />
 
+    <SeekBar
+        android:id="@+id/seekBar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/telemetryTextView"
+        android:layout_marginLeft="53dp"
+        android:layout_toRightOf="@+id/connectionButton" />
+
+    <TextView
+        android:id="@+id/textViewConnectionStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@color/red"
+        android:text="Connection"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textViewMotorsArmedStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textViewConnectionStatus"
+        android:background="@color/red"
+        android:text="Motors Armed"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textViewAttitudeMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textViewMotorsArmedStatus"
+        android:background="@color/red"
+        android:text="Attitude Mode"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textViewAltitudeHold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textViewAttitudeMode"
+        android:background="@color/red"
+        android:text="Altitude Hold"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
 </RelativeLayout>
