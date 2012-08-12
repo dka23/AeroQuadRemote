@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="motorBarPadding">4dp</dimen>
+    <dimen name="motorBarWidth">80dp</dimen>
+    <dimen name="flightControlButtonHeight">200dp</dimen>
+    <dimen name="flightControlButtonWidth">200dp</dimen>
+</resources>

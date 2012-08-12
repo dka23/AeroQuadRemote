@@ -4,115 +4,254 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world"
-        tools:context=".MainActivity" />
-
-    <ToggleButton
-        android:id="@+id/connectionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="17dp"
-        android:text="ToggleButton" />
-
-    <TextView
         android:id="@+id/telemetryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/connectionButton"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="28dp"
         android:text="TextView" />
 
-    <ProgressBar
-        android:id="@+id/progressMotor1"
-        style="?android:attr/progressBarStyleHorizontal"
+    <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp" />
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="40dp" >
 
-    <ProgressBar
-        android:id="@+id/progressMotor3"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/progressMotor1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="18dp" />
+        <Button
+            android:id="@+id/connectionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connect" />
 
-    <ProgressBar
-        android:id="@+id/progressMotor2"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="22dp"
-        android:layout_toRightOf="@+id/textView1" />
+        <Button
+            android:id="@+id/buttonArmMotors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arm Motors" />
+    </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/progressMotor4"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="15dp"
-        android:layout_toLeftOf="@+id/textView1" />
-
-    <SeekBar
-        android:id="@+id/seekBar1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/telemetryTextView"
-        android:layout_marginLeft="53dp"
-        android:layout_toRightOf="@+id/connectionButton" />
-
-    <TextView
-        android:id="@+id/textViewConnectionStatus"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:background="@color/red"
-        android:text="Connection"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:orientation="horizontal" >
 
-    <TextView
-        android:id="@+id/textViewMotorsArmedStatus"
+        <TextView
+            android:id="@+id/textViewConnectionStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:text="Connection"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewMotorsArmedStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:text="Motors Armed"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewAttitudeMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:text="Attitude Mode"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewAltitudeHold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:text="Altitude Hold"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/textViewBattVoltage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="n.a."
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <com.dkaedv.aeroquadremote.view.VerticalSeekBar
+        android:id="@+id/seekBarThrottle"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:max="@integer/maxThrottle" />
+
+    <GridLayout
+        android:id="@+id/gridLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textViewConnectionStatus"
-        android:background="@color/red"
-        android:text="Motors Armed"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:columnCount="@integer/two"
+        android:rowCount="@integer/three" >
 
-    <TextView
-        android:id="@+id/textViewAttitudeMode"
+        <ProgressBar
+            android:id="@+id/progressMotor1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:minWidth="@dimen/motorBarWidth"
+            android:padding="@dimen/motorBarPadding" />
+
+        <ProgressBar
+            android:id="@+id/progressMotor2"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:minWidth="@dimen/motorBarWidth"
+            android:padding="@dimen/motorBarPadding" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="@integer/two"
+            android:layout_gravity="center"
+            android:padding="@dimen/motorBarPadding"
+            android:text="@string/hello_world"
+            tools:context=".MainActivity" />
+
+        <ProgressBar
+            android:id="@+id/progressMotor3"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:minWidth="@dimen/motorBarWidth"
+            android:padding="@dimen/motorBarPadding" />
+
+        <ProgressBar
+            android:id="@+id/progressMotor4"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:minWidth="@dimen/motorBarWidth"
+            android:padding="@dimen/motorBarPadding" />
+    </GridLayout>
+
+    <Button
+        android:id="@+id/buttonControl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textViewMotorsArmedStatus"
-        android:background="@color/red"
-        android:text="Attitude Mode"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:minHeight="@dimen/flightControlButtonHeight"
+        android:minWidth="@dimen/flightControlButtonWidth"
+        android:text="Hold to Control" />
 
-    <TextView
-        android:id="@+id/textViewAltitudeHold"
+    <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textViewAttitudeMode"
-        android:background="@color/red"
-        android:text="Altitude Hold"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/seekBarThrottle"
+        android:columnCount="@integer/two"
+        android:rowCount="@integer/seven" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_gravity="left"
+            android:text="X Ang"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewKinematicsX"
+            android:layout_gravity="left"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_gravity="left"
+            android:text="Y Ang"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewKinematicsY"
+            android:layout_gravity="left"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_gravity="left"
+            android:text="Z Ang"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewKinematicsZ"
+            android:layout_gravity="left"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewRollDesc"
+            android:layout_gravity="left"
+            android:text="Roll"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewRoll"
+            android:layout_gravity="left"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewPitchDesc"
+            android:layout_gravity="left"
+            android:text="Pitch"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewPitch"
+            android:layout_gravity="left"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewYawDesc"
+            android:layout_gravity="left"
+            android:text="Yaw"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewYaw"
+            android:layout_gravity="left"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <TextView
+            android:id="@+id/textViewThrottleDesc"
+            android:layout_gravity="left"
+            android:text="Throttle"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewThrottle"
+            android:layout_gravity="left"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+        </GridLayout>
 
 </RelativeLayout>

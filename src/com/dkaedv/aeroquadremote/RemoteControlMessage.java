@@ -26,4 +26,10 @@ public class RemoteControlMessage {
 		
 		return out.toString();
 	}
+	
+	public void resetAxes() {
+		roll = 1500;
+		pitch = 1500;
+		yaw = 1500;
+	}
 }

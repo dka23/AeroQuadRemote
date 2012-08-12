@@ -15,16 +15,17 @@ final class TelemetryUpdaterTask extends AsyncTask<String, AllFlightValuesMessag
 	private final MainActivity mainActivity;
 	private final static String TAG = TelemetryUpdaterTask.class.getName();
 	
+	private final static boolean DEBUG = false;
+	
 	TelemetryUpdaterTask(MainActivity mainActivity) {
 		this.mainActivity = mainActivity;
 	}
 
 	private AllFlightValuesMessage flightValuesMsg = new AllFlightValuesMessage();
-	private RemoteControlMessage remoteControlMsg = new RemoteControlMessage();
-
+	
 	@Override
 	protected String doInBackground(String... params) {
-		Log.d(TAG, "TelemetryUpdaterTask started");
+		if (DEBUG) Log.d(TAG, "TelemetryUpdaterTask started");
 		
 		try {
 			BufferedReader streamReader = new BufferedReader(new InputStreamReader(this.mainActivity.socket.getInputStream()));
@@ -38,25 +39,34 @@ final class TelemetryUpdaterTask extends AsyncTask<String, AllFlightValuesMessag
 				// Do nothing, just continue
 			}
 
-			Log.d(TAG, "Requesting data");
+			if (DEBUG) Log.d(TAG, "Requesting data");
 			streamWriter.write('s');
 			streamWriter.flush();
 			
 			printSocketState(this.mainActivity.socket);
 
 			while (this.mainActivity.socket != null && this.mainActivity.socket.isConnected()) {
-				Log.d(TAG, "Sending commands");
-				streamWriter.write(remoteControlMsg.serialize());
+				if (DEBUG) Log.d(TAG, "Sending commands");
+				this.mainActivity.remoteControlMsg.throttle = this.mainActivity.seekBarThrottle.getProgress() + 1000;
+				
+				if (this.mainActivity.deviceOrientation.isListening()) {
+					int[] commands = this.mainActivity.deviceOrientation.getRemoteControlCommands();
+					this.mainActivity.remoteControlMsg.roll = commands[0];
+					this.mainActivity.remoteControlMsg.pitch = commands[1];
+					this.mainActivity.remoteControlMsg.yaw = commands[2];					
+				}
+				
+				streamWriter.write(this.mainActivity.remoteControlMsg.serialize());
 				streamWriter.write('s');
 				streamWriter.flush();
 				
-				Log.d(TAG, "Reading line");
+				if (DEBUG) Log.d(TAG, "Reading line");
 				line = streamReader.readLine();
-				Log.d(TAG, "Received line: " + line);
+				if (DEBUG) Log.d(TAG, "Received line: " + line);
 				
 				
 				flightValuesMsg.parse(line);
-				Log.d(TAG, "Parsed Message: " + flightValuesMsg);
+				if (DEBUG) Log.d(TAG, "Parsed Message: " + flightValuesMsg);
 				
 				publishProgress(flightValuesMsg);
 			}
@@ -70,7 +80,7 @@ final class TelemetryUpdaterTask extends AsyncTask<String, AllFlightValuesMessag
 	
 	private void printSocketState(Socket socket) {
 		try {
-			Log.d(TAG, "Socket state: keepAlive: " + socket.getKeepAlive() + ", soLinger: " + socket.getSoLinger() + ", SendBuffer: " + socket.getSendBufferSize() + ", ReceiveBuffer: " + socket.getReceiveBufferSize() + ", tcpNoDelay: " + socket.getTcpNoDelay());
+			if (DEBUG) Log.d(TAG, "Socket state: keepAlive: " + socket.getKeepAlive() + ", soLinger: " + socket.getSoLinger() + ", SendBuffer: " + socket.getSendBufferSize() + ", ReceiveBuffer: " + socket.getReceiveBufferSize() + ", tcpNoDelay: " + socket.getTcpNoDelay());
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
