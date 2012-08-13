@@ -11,6 +11,7 @@ import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -69,12 +70,20 @@ public class MainActivity extends Activity {
 	private boolean isConnected = false;
 	
 	protected DeviceOrientation deviceOrientation;
+	
+	private PowerManager powerManager;
+	private PowerManager.WakeLock wakeLock;
 
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+		
+		// Only defines wake lock, does not acquire
+		wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "AeroQuad connection open");
 
 		wireFieldsToUIElements();
 
@@ -137,6 +146,7 @@ public class MainActivity extends Activity {
 		
 		try {
 			socket.close();
+			processConnectionClosed();
 		} catch (IOException e) {
 			Log.e(TAG, "Could not close socket: " + e.getMessage(), e);
 		} catch (NullPointerException e) {
@@ -243,11 +253,13 @@ public class MainActivity extends Activity {
 		textViewConnectionStatus.setBackgroundColor(getResources().getColor(R.color.green));
 		isConnected = true;
 		connectionButton.setText("Disconnect");
+		wakeLock.acquire();
 	}
 
 	void processConnectionClosed() {
 		textViewConnectionStatus.setBackgroundColor(getResources().getColor(R.color.red));
 		isConnected = false;
 		connectionButton.setText("Connect");
+		wakeLock.release();
 	}
 }

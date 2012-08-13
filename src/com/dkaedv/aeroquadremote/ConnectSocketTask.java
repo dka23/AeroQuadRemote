@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.AsyncTask;
+import android.os.PowerManager;
 import android.util.Log;
 
 import com.whitebyte.wifihotspotutils.ClientScanResult;
@@ -60,7 +61,7 @@ final class ConnectSocketTask extends AsyncTask<String, String, Boolean> {
 	protected void onPostExecute(Boolean result) {
 		if (result.booleanValue()) {
 			// Start AsyncTask to get telemetry data
-			new TelemetryUpdaterTask(this.mainActivity).execute("");
+			new TelemetryUpdaterTask(this.mainActivity).execute("");			
 		}
 	}
 	
