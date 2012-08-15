@@ -4,13 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 
 import android.app.Activity;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.PowerManager;
 import android.util.Log;
 import android.view.Menu;
@@ -25,7 +20,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.dkaedv.aeroquadremote.AllFlightValuesMessage.AltitudeHoldStatus;
 import com.dkaedv.aeroquadremote.AllFlightValuesMessage.Mode;
