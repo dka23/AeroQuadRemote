@@ -49,6 +49,7 @@ public class MainActivity extends Activity {
 	private TextView textViewPitch;
 	private TextView textViewYaw;
 	private TextView textViewThrottle;
+	private TextView textViewAltitude;
 	
 	protected Button buttonArmMotors;
 	
@@ -59,9 +60,12 @@ public class MainActivity extends Activity {
 
 	private Button connectionButton;
 	private Button controlButton;
+	private Button quickCalibrationButton;
+	private Button altitudeHoldButton;
 	
 	private boolean battIsAlarm = false;
 	private boolean isConnected = false;
+	protected boolean isCommandTransmissionEnabled = true;
 	
 	protected DeviceOrientation deviceOrientation;
 	
@@ -128,6 +132,22 @@ public class MainActivity extends Activity {
 				return false;
 			}
 		});
+		
+		quickCalibrationButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				new QuickCalibrationTask(MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+			}
+		});
+		
+		altitudeHoldButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				if (flightValuesMsg.altitudeHoldStatus == AltitudeHoldStatus.OFF) {
+					remoteControlMsg.aux1 = 1000;
+				} else {
+					remoteControlMsg.aux1 = 2000;
+				}
+			}
+		});
 	}
 		
 	private void resetState() {
@@ -167,10 +187,14 @@ public class MainActivity extends Activity {
 		textViewPitch = (TextView) findViewById(R.id.textViewPitch);
 		textViewYaw = (TextView) findViewById(R.id.textViewYaw);
 		textViewThrottle = (TextView) findViewById(R.id.textViewThrottle);
+		textViewAltitude = (TextView) findViewById(R.id.textViewAltitude);
 		
 		connectionButton = (Button) findViewById(R.id.connectionButton);
 		controlButton = (Button) findViewById(R.id.buttonControl);
 		buttonArmMotors = (Button) findViewById(R.id.buttonArmMotors);
+		quickCalibrationButton = (Button) findViewById(R.id.buttonQuickCalibration);
+		altitudeHoldButton = (Button) findViewById(R.id.buttonAltitudeHold);
+		
 		seekBarThrottle = (SeekBar) findViewById(R.id.seekBarThrottle);
 	}
 
@@ -217,6 +241,7 @@ public class MainActivity extends Activity {
 		textViewPitch.setText(String.valueOf(msg.receiverPitch));
 		textViewYaw.setText(String.valueOf(msg.receiverYaw));
 		textViewThrottle.setText(String.valueOf(msg.receiverThrottle));
+		textViewAltitude.setText(String.valueOf(msg.altitude));
 		
 		textViewBattVoltage.setText(msg.batteryVoltage + " V");
 		if (msg.batteryVoltage < (3.33 * 4.0)) {

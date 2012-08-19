@@ -5,4 +5,5 @@
     <integer name="three">3</integer>
     <integer name="six">6</integer>
     <integer name="seven">7</integer>
+    <integer name="eight">8</integer>
 </resources>

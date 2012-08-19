@@ -29,6 +29,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Arm Motors" />
+
+        <Button
+            android:id="@+id/buttonQuickCalibration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quick Cal" />
+
+        <Button
+            android:id="@+id/buttonAltitudeHold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alt Hold" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -167,7 +180,7 @@
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/seekBarThrottle"
         android:columnCount="@integer/two"
-        android:rowCount="@integer/seven" >
+        android:rowCount="@integer/eight" >
 
         <TextView
             android:id="@+id/textView2"
@@ -252,6 +265,18 @@
             android:layout_gravity="left"
             android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewAltitudeDesc"
+            android:layout_gravity="left"
+            android:text="Altitude"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewAltitude"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
         </GridLayout>
 
 </RelativeLayout>

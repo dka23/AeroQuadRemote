@@ -33,7 +33,8 @@ final class ConnectSocketTask extends AsyncTask<String, String, Boolean> {
 			}
 			
 			
-			in = InetAddress.getByName(clients.get(0).getIpAddr());
+			//in = InetAddress.getByName(clients.get(0).getIpAddr());
+			in = InetAddress.getByName("192.168.1.38");
 			if (in.isReachable(500)) {
 				Log.d(TAG, "AeroQuad reachable");
 				this.mainActivity.socket = new Socket(in, 2000);
@@ -61,7 +62,8 @@ final class ConnectSocketTask extends AsyncTask<String, String, Boolean> {
 	protected void onPostExecute(Boolean result) {
 		if (result.booleanValue()) {
 			// Start AsyncTask to get telemetry data
-			new TelemetryUpdaterTask(this.mainActivity).execute("");			
+			new TelemetryUpdaterTask(this.mainActivity).executeOnExecutor(THREAD_POOL_EXECUTOR, "");	
+			new CommandSenderTask(this.mainActivity).executeOnExecutor(THREAD_POOL_EXECUTOR, "");	
 		}
 	}
 	

@@ -46,29 +46,19 @@ final class TelemetryUpdaterTask extends AsyncTask<String, AllFlightValuesMessag
 			printSocketState(this.mainActivity.socket);
 
 			while (this.mainActivity.socket != null && this.mainActivity.socket.isConnected()) {
-				if (DEBUG) Log.d(TAG, "Sending commands");
-				this.mainActivity.remoteControlMsg.throttle = this.mainActivity.seekBarThrottle.getProgress() + 1000;
-				
-				if (this.mainActivity.deviceOrientation.isListening()) {
-					int[] commands = this.mainActivity.deviceOrientation.getRemoteControlCommands();
-					this.mainActivity.remoteControlMsg.roll = commands[0];
-					this.mainActivity.remoteControlMsg.pitch = commands[1];
-					this.mainActivity.remoteControlMsg.yaw = commands[2];					
-				}
-				
-				streamWriter.write(this.mainActivity.remoteControlMsg.serialize());
-				streamWriter.write('s');
-				streamWriter.flush();
-				
 				if (DEBUG) Log.d(TAG, "Reading line");
 				line = streamReader.readLine();
 				if (DEBUG) Log.d(TAG, "Received line: " + line);
 				
+				if (countOccurrences(line, ',') == 24) {
+					flightValuesMsg.parse(line);
+					if (DEBUG) Log.d(TAG, "Parsed Message: " + flightValuesMsg);
+					publishProgress(flightValuesMsg);
+				} else {
+					Log.w(TAG, "Invalid line received: " + line);
+				}
 				
-				flightValuesMsg.parse(line);
-				if (DEBUG) Log.d(TAG, "Parsed Message: " + flightValuesMsg);
 				
-				publishProgress(flightValuesMsg);
 			}
 		} catch (IOException e) {
 			Log.e(TAG, "Error while updating telemetry: " + e.getMessage(), e);
@@ -76,6 +66,19 @@ final class TelemetryUpdaterTask extends AsyncTask<String, AllFlightValuesMessag
 		
 		
 		return null;
+	}
+	
+	private static int countOccurrences(String haystack, char needle)
+	{
+	    int count = 0;
+	    for (int i=0; i < haystack.length(); i++)
+	    {
+	        if (haystack.charAt(i) == needle)
+	        {
+	             count++;
+	        }
+	    }
+	    return count;
 	}
 	
 	private void printSocketState(Socket socket) {
